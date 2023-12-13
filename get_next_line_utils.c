@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 00:13:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/11 19:18:26 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:40:56 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	s3[a] = '\0';
 	return (s3);
+}
+
+int	ft_strlen(char const *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

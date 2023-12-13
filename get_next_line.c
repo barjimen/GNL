@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/11 19:19:57 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:02:48 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,66 +18,53 @@ char *joiny(char *montoncito, int fd)
     char *buffer;
 
     buffer = calloc(sizeof(char), BUFFER_SIZE + 1);
-    if(!montoncito)
-        montoncito = calloc(sizeof(char), 1);
-    
-    while (!ft_strchr(buffer, '\n'))
+    if (!montoncito)
+        montoncito = calloc(sizeof(char), BUFFER_SIZE + 1);
+    read(fd, buffer, BUFFER_SIZE);
+    montoncito = ft_strjoin(montoncito, buffer);
+    while (!ft_strchr(buffer, '\n') || !ft_strchr(buffer, '\0') )
     {
-        read(fd, buffer ,BUFFER_SIZE);
-        ft_strjoin(montoncito, buffer);
+        read(fd, buffer, BUFFER_SIZE);
+        montoncito = ft_strjoin(montoncito, buffer);
     }
-    
-    
-    
+    return(montoncito);
 }
 
-static char *save(char *buffer, int nbites)
+char *cutty(char *montoncito)
 {
-    int count;
-    
-    count = 0;
-    //calloc(buffer, nbites);
-   while (buffer)
-   {
-        if(buffer[count] == "\n" || buffer[count] == '\0')
-        {
-              
-        }
-        else
-        count++;
-   }
-   return(buffer); //que será el nuevo valor a unir
-}
+    int     cont;
+    int     i;
+    char    *line;
 
-char *cutty()
-{
-    
+    cont = 0;
+    i = 0;
+    while (montoncito[cont] != '\0' && montoncito[cont] != '\n')
+        cont++;
+    line = ft_calloc(sizeof(char), cont);
+    while (i < cont)
+    {
+        line[i] = montoncito[i];
+        i++;
+    }
+    return (line);
 }
 
 char *get_next_line (int fd)
 {
     static char *montoncito;
-    montoncito = joiny(montoncito, fd);
+    char *line;
+    montoncito = joiny(montoncito, fd); // (0\+ho+la+\nq) -> (q+ue+ta+l\n)
+    line = cutty(montoncito); //((hola\n)q)
+    
+    printf("El valor de line es: %s\n", line);
+    
+    montoncito += ft_strlen(line) + 1;
+    printf("El valor de montoncito es: %s\n", montoncito);
+   return (line); 
 }
 
 int main(int argc, char **argv)
 {
-    int resread;
-    int fd;
-    int nbites;
-    char *buffer;
-    char *path;
-    if(1)
-    {
-        nbites = ft_atoi(argv[2]);
-        buffer = malloc(nbites + 1);
-        path = argv[1];
-        fd = open(path, O_RDONLY);
-        resread = read(fd, buffer ,nbites);
-        
-        save(buffer, nbites);
-        printf("el resultado de resread es %d\n", resread);
-        printf("Lo que ha leido es:\n%s\n", buffer);
-    }
-    return(0);
+    get_next_line(open(argv[1], O_RDONLY));
+    return (0);
 }
