@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 00:13:35 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/13 20:46:53 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/13 22:30:28 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 //HASTA AQUÍ LAS LIBRERÍAS
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4
+#  define BUFFER_SIZE 3
 # endif
 
 
