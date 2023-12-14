@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/14 20:53:30 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/14 21:14:40 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,12 @@ char	*cutty(char *montoncito)
 	int		cont;
 	int		i;
 	char	*line;
+	char	*temp;
 
 	cont = 0;
 	i = 0;
+	if (!montoncito || montoncito[0] == '\0')
+		return (NULL);
 	while (montoncito[cont] != '\0' && montoncito[cont] != '\n')
 		cont++;
 	line = ft_calloc(sizeof(char), cont + 1);
@@ -52,7 +55,13 @@ char	*cutty(char *montoncito)
 		line[i] = montoncito[i];
 		i++;
 	}
-	if (montoncito != NULL)
+	if (montoncito[cont] == '\n')
+	{
+		temp = ft_strdup(montoncito + cont + 1);
+		free(montoncito);
+		montoncito = temp;
+	}
+	else
 	{
 		free(montoncito);
 		montoncito = NULL;
