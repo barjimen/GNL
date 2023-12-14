@@ -6,11 +6,11 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 00:13:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/13 23:06:40 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/14 20:05:57 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next.h"
+#include "get_next_line.h"
 
 int	ft_atoi(const char *str)
 {

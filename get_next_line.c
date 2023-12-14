@@ -6,37 +6,17 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/13 23:07:10 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/14 20:17:33 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// #define JUMP "\033[31m\\n\033[0m"
-// #define begin "\033[32m[\033[0m"
-// #define end "\033[32m] \033[0m"
-
-// void	write_buffer(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	write(1, begin, strlen(begin));
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '\n')
-// 			write(1, JUMP, strlen(JUMP));
-// 		else
-// 			write(1, &str[i], 1);
-// 		i++;
-// 	}
-// 	write(1, end, strlen(end));
-// }
-
 char	*joiny(char *montoncito, int fd)
 {
 	char	*buffer;
 	int		aux;
+	char	*temp;
 
 	aux = 1;
 	buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
@@ -48,9 +28,11 @@ char	*joiny(char *montoncito, int fd)
 		if (aux == 0)
 			break ;
 		buffer[aux] = '\0';
-		write_buffer(buffer);
-		montoncito = ft_strjoin(montoncito, buffer);
+		temp = ft_strjoin(montoncito, buffer);
+		free(montoncito);
+		montoncito = temp;
 	}
+	free(buffer);
 	return (montoncito);
 }
 
@@ -64,11 +46,16 @@ char	*cutty(char *montoncito)
 	i = 0;
 	while (montoncito[cont] != '\0' && montoncito[cont] != '\n')
 		cont++;
-	line = ft_calloc(sizeof(char), cont);
+	line = ft_calloc(sizeof(char), cont + 1);
 	while (i < cont)
 	{
 		line[i] = montoncito[i];
 		i++;
+	}
+	if (montoncito != NULL)
+	{
+		free(montoncito);
+		montoncito = NULL;
 	}
 	return (line);
 }
@@ -77,21 +64,28 @@ char	*get_next_line(int fd)
 {
 	static char	*montoncito;
 	char		*line;
+	char		*ref;
 
 	montoncito = joiny(montoncito, fd);
 	line = cutty(montoncito);
+	ref = montoncito;
 	printf("\nEl valor de line es: %s\n", line);
 	montoncito += ft_strlen(line) + 1;
 	printf("El valor de montoncito es: %s\n", montoncito);
+	free(montoncito);
+	montoncito = NULL;
 	return (line);
 }
 
 int	main(int argc, char **argv)
 {
 	int	fd;
+	(void) argc;
 
 	fd = open(argv[1], O_RDONLY);
 	get_next_line(fd);
 	get_next_line(fd);
+	get_next_line(fd);
+	close(fd);
 	return (0);
 }
