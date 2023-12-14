@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/14 20:17:33 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/14 20:18:52 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char	*get_next_line(int fd)
 int	main(int argc, char **argv)
 {
 	int	fd;
-	(void) argc;
 
 	fd = open(argv[1], O_RDONLY);
 	get_next_line(fd);
