@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 00:13:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/14 21:12:52 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:38:18 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,21 +123,3 @@ int	ft_strlen(char const *str)
 	return (i);
 }
 
-char	*ft_strdup(const char *s1)
-{
-	char	*a;
-	size_t	b;
-
-	b = ft_strlen(s1);
-	a = malloc((sizeof(char)) * b + 1);
-	if (!a)
-		return (NULL);
-	b = 0;
-	while (s1[b])
-	{
-		a[b] = s1[b];
-		b++;
-	}
-	a[b] = '\0';
-	return (a);
-}
