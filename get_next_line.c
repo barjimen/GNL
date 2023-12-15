@@ -6,12 +6,11 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/15 19:49:36 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:57:22 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -30,7 +29,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	if (len > a)
 		len = a - start;
-	b = ft_calloc (sizeof(char), len + 1);
+	b = ft_calloc(sizeof(char), len + 1);
 	if (!b)
 		return (NULL);
 	b = ft_memcpy(b, &s[start], len);
@@ -72,8 +71,8 @@ char	*cutty(char *montoncito)
 	while (montoncito[cont] != '\0' && montoncito[cont] != '\n')
 		cont++;
 	line = ft_calloc(sizeof(char), cont + 1);
-	if(!line)
-		return(NULL);
+	if (!line)
+		return (NULL);
 	while (i < cont)
 	{
 		line[i] = montoncito[i];
@@ -90,18 +89,18 @@ char	*get_next_line(int fd)
 
 	montoncito = joiny(montoncito, fd);
 	line = cutty(montoncito);
-	//printf("\nEl valor de line es: %s\n", line);
+	/* printf("\nEl valor de line es: %s\n", line);*/
 	tmp = montoncito;
 	montoncito = ft_substr(montoncito, ft_strlen(line) + 1, -1);
 	if (!montoncito)
 		montoncito = tmp;
 	else
 		free(tmp);
-	//printf("El valor de montoncito es: %s\n", montoncito);
+	/*printf("El valor de montoncito es: %s\n", montoncito);*/
 	return (line);
 }
 
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
 	int	fd;
 	char *str;
@@ -117,4 +116,4 @@ int	main(int argc, char **argv)
 	system("leaks -q a.out");
 
 	return (0);
-}
+}*/
