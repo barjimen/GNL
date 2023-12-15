@@ -6,40 +6,12 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 00:13:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/15 19:38:18 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:48:29 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_atoi(const char *str)
-{
-	int			x;
-	long int	nb;
-	int			sym;
-
-	x = 0;
-	nb = 0;
-	sym = 1;
-	while ((str[x] >= 9 && str[x] <= 13) || (str[x] == 32))
-		x++;
-	if (str[x] == '-' || str[x] == '+')
-	{
-		if (str[x] == '-')
-			sym *= -1;
-		x++;
-	}
-	while (str[x] >= '0' && str[x] <= '9')
-	{
-		nb = (str[x++] - '0') + (nb * 10);
-		if (nb > 2147483647 && sym == 1)
-			return (-1);
-		else if (nb > 2147483648 && sym == -1)
-			return (0);
-	}
-	nb *= sym;
-	return (nb);
-}
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -123,3 +95,21 @@ int	ft_strlen(char const *str)
 	return (i);
 }
 
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t		i;
+	char		*a;
+	const char	*b;
+
+	a = (char *)dst;
+	b = (const char *)src;
+	i = 0;
+	if (b == '\0' && a == '\0')
+		return (NULL);
+	while (i < n)
+	{
+		a[i] = b[i];
+		i++;
+	}
+	return (a);
+}

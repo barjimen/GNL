@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 00:13:35 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/15 19:03:53 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:48:38 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@
 //FUNCTIONS
 
 char	*get_next_line(int fd);
-int		ft_atoi(const char *str);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strlen(char const *str);
-char	*ft_strdup(const char *s1);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif

@@ -6,30 +6,12 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/15 19:44:41 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:49:36 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	size_t		i;
-	char		*a;
-	const char	*b;
-
-	a = (char *)dst;
-	b = (const char *)src;
-	i = 0;
-	if (b == '\0' && a == '\0')
-		return (NULL);
-	while (i < n)
-	{
-		a[i] = b[i];
-		i++;
-	}
-	return (a);
-}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -115,7 +97,6 @@ char	*get_next_line(int fd)
 		montoncito = tmp;
 	else
 		free(tmp);
-	//montoncito += ft_strlen(line) + 1;
 	//printf("El valor de montoncito es: %s\n", montoncito);
 	return (line);
 }
@@ -127,11 +108,11 @@ int	main(int argc, char **argv)
 
 	fd = open(argv[1], O_RDONLY);
 	str = get_next_line(fd);
-	printf("%s\n", str);
+	printf("El resultado es: %s\n", str);
 	free(str);
 	system("leaks -q a.out");
 	str = get_next_line(fd);
-	printf("%s\n", str);
+	printf("El resultado es: %s\n", str);
 	free(str);
 	system("leaks -q a.out");
 
