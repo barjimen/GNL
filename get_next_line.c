@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/15 19:57:22 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/15 21:02:13 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*tmp;
 
+	if(fd != 0)
+		return(NULL);
 	montoncito = joiny(montoncito, fd);
 	line = cutty(montoncito);
 	/* printf("\nEl valor de line es: %s\n", line);*/
@@ -100,7 +102,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*int	main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	int	fd;
 	char *str;
@@ -116,4 +118,4 @@ char	*get_next_line(int fd)
 	system("leaks -q a.out");
 
 	return (0);
-}*/
+}
