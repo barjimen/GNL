@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/15 21:02:13 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/16 21:00:09 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,15 @@ char	*joiny(char *montoncito, int fd)
 	buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 	if (!montoncito)
 		montoncito = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
-	while (!ft_strchr(buffer, '\n'))
+	while (!ft_strchr(montoncito, '\n'))
 	{
 		aux = read(fd, buffer, BUFFER_SIZE);
+		if (aux == -1 || !*buffer)
+		{
+			free(buffer);
+			free(montoncito);
+			return (NULL);
+		}
 		if (aux == 0)
 			break ;
 		buffer[aux] = '\0';
@@ -68,7 +74,9 @@ char	*cutty(char *montoncito)
 
 	cont = 0;
 	i = 0;
-	while (montoncito[cont] != '\0' && montoncito[cont] != '\n')
+	while (montoncito[cont] != '\n')
+		cont++;
+	if(montoncito[cont] == '\n')
 		cont++;
 	line = ft_calloc(sizeof(char), cont + 1);
 	if (!line)
@@ -87,35 +95,56 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*tmp;
 
-	if(fd != 0)
-		return(NULL);
-	montoncito = joiny(montoncito, fd);
-	line = cutty(montoncito);
-	/* printf("\nEl valor de line es: %s\n", line);*/
-	tmp = montoncito;
-	montoncito = ft_substr(montoncito, ft_strlen(line) + 1, -1);
-	if (!montoncito)
-		montoncito = tmp;
+	if(fd != -1 || BUFFER_SIZE > 0)
+	{	
+		montoncito = joiny(montoncito, fd);
+		if(!montoncito)
+			return(NULL);
+		line = cutty(montoncito);
+		/* printf("\nEl valor de line es: %s\n", line);*/
+		tmp = montoncito;
+		montoncito = ft_substr(montoncito, ft_strlen(line), -1);
+		if (!montoncito)
+			montoncito = tmp;
+		else
+		 	free(tmp);
+		/*printf("El valor de montoncito es: %s\n", montoncito);*/
+		return (line);
+	}
 	else
-		free(tmp);
-	/*printf("El valor de montoncito es: %s\n", montoncito);*/
-	return (line);
+		return(NULL);
 }
 
-int	main(int argc, char **argv)
-{
-	int	fd;
-	char *str;
+// int	main(int argc, char **argv)
+// {
+// 	int	fd;
+// 	char *str;
 
-	fd = open(argv[1], O_RDONLY);
-	str = get_next_line(fd);
-	printf("El resultado es: %s\n", str);
-	free(str);
-	system("leaks -q a.out");
-	str = get_next_line(fd);
-	printf("El resultado es: %s\n", str);
-	free(str);
-	system("leaks -q a.out");
+// 	int i;
 
-	return (0);
-}
+// 	i = 8;
+// 	fd = open(argv[1], O_RDONLY);
+
+// 	str = get_next_line(fd);
+// 	printf("El resultado es: %s", str);
+// 	free(str);
+
+
+// 	//hola
+// 	// printf("fd es: %d\n",fd);
+	
+// 	// //system("leaks -q a.out");
+// 	// //e
+// 	// str = get_next_line(fd);
+// 	// printf("El resultado es: %s", str);
+// 	// free(str);
+// 	// //system("leaks -q a.out");
+	
+// 	// //null
+// 	// str = get_next_line(fd);
+// 	// printf("El resultado es: %s", str);
+// 	// free(str);
+// 	//system("leaks -q a.out");
+
+// 	return (0);
+// }
