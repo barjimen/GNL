@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/16 21:00:09 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/16 21:05:11 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*cutty(char *montoncito)
 	i = 0;
 	while (montoncito[cont] != '\n')
 		cont++;
-	if(montoncito[cont] == '\n')
+	if (montoncito[cont] == '\n')
 		cont++;
 	line = ft_calloc(sizeof(char), cont + 1);
 	if (!line)
@@ -95,11 +95,11 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*tmp;
 
-	if(fd != -1 || BUFFER_SIZE > 0)
-	{	
+	if (fd != -1 || BUFFER_SIZE > 0)
+	{
 		montoncito = joiny(montoncito, fd);
-		if(!montoncito)
-			return(NULL);
+		if (!montoncito)
+			return (NULL);
 		line = cutty(montoncito);
 		/* printf("\nEl valor de line es: %s\n", line);*/
 		tmp = montoncito;
@@ -107,12 +107,12 @@ char	*get_next_line(int fd)
 		if (!montoncito)
 			montoncito = tmp;
 		else
-		 	free(tmp);
+			free(tmp);
 		/*printf("El valor de montoncito es: %s\n", montoncito);*/
 		return (line);
 	}
 	else
-		return(NULL);
+		return (NULL);
 }
 
 // int	main(int argc, char **argv)
@@ -129,17 +129,16 @@ char	*get_next_line(int fd)
 // 	printf("El resultado es: %s", str);
 // 	free(str);
 
-
 // 	//hola
 // 	// printf("fd es: %d\n",fd);
-	
+
 // 	// //system("leaks -q a.out");
 // 	// //e
 // 	// str = get_next_line(fd);
 // 	// printf("El resultado es: %s", str);
 // 	// free(str);
 // 	// //system("leaks -q a.out");
-	
+
 // 	// //null
 // 	// str = get_next_line(fd);
 // 	// printf("El resultado es: %s", str);
