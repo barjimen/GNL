@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 00:13:35 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/16 19:52:36 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/19 20:54:35 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 //END LIB
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4
+#  define BUFFER_SIZE 1000
 # endif
 
 //FUNCTIONS

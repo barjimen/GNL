@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/16 21:05:11 by barjimen         ###   ########.fr       */
+/*   Updated: 2023/12/19 22:35:58 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,54 +38,51 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 char	*joiny(char *montoncito, int fd)
 {
-	char	*buffer;
+	char	buffer[BUFFER_SIZE + 1];
 	int		aux;
 	char	*temp;
 
-	aux = 1;
-	buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
-	if (!montoncito)
-		montoncito = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
-	while (!ft_strchr(montoncito, '\n'))
+	aux = 0;
+	buffer[aux] = '\0';
+	while (!ft_strchr(buffer, '\n'))
 	{
 		aux = read(fd, buffer, BUFFER_SIZE);
-		if (aux == -1 || !*buffer)
+		if ((aux == -1 || !*buffer))
 		{
-			free(buffer);
-			free(montoncito);
-			return (NULL);
+			return (montoncito);
 		}
 		if (aux == 0)
 			break ;
 		buffer[aux] = '\0';
-		temp = montoncito;
-		montoncito = ft_strjoin(temp, buffer);
-		free(temp);
+		if (montoncito)
+		{
+			temp = montoncito;
+			montoncito = ft_strjoin(temp, buffer);
+			free(temp);
+		}
+		else
+		{
+			montoncito = ft_calloc(aux + 1, sizeof(char));
+			ft_memcpy(montoncito, buffer, aux);
+		}	
 	}
-	free(buffer);
 	return (montoncito);
 }
 
 char	*cutty(char *montoncito)
 {
 	int		cont;
-	int		i;
 	char	*line;
 
 	cont = 0;
-	i = 0;
-	while (montoncito[cont] != '\n')
+	while (montoncito[cont] != '\n' && montoncito[cont] != '\0')
 		cont++;
 	if (montoncito[cont] == '\n')
 		cont++;
 	line = ft_calloc(sizeof(char), cont + 1);
 	if (!line)
 		return (NULL);
-	while (i < cont)
-	{
-		line[i] = montoncito[i];
-		i++;
-	}
+	ft_memcpy(line, montoncito, cont);
 	return (line);
 }
 
@@ -95,55 +92,46 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*tmp;
 
+	line = NULL;
 	if (fd != -1 || BUFFER_SIZE > 0)
 	{
 		montoncito = joiny(montoncito, fd);
 		if (!montoncito)
 			return (NULL);
-		line = cutty(montoncito);
-		/* printf("\nEl valor de line es: %s\n", line);*/
-		tmp = montoncito;
-		montoncito = ft_substr(montoncito, ft_strlen(line), -1);
-		if (!montoncito)
-			montoncito = tmp;
+		if (!ft_strchr(montoncito, '\n'))
+		{
+			line = montoncito;
+			montoncito = NULL;
+		}
 		else
-			free(tmp);
-		/*printf("El valor de montoncito es: %s\n", montoncito);*/
-		return (line);
+		{
+			line = cutty(montoncito);
+			tmp = montoncito;
+			montoncito = ft_substr(montoncito, ft_strlen(line), -1);
+			if (!montoncito)
+				montoncito = tmp;
+			else
+				free(tmp);
+		}
 	}
-	else
-		return (NULL);
+	return (line);
 }
 
-// int	main(int argc, char **argv)
-// {
-// 	int	fd;
-// 	char *str;
+int	main(int argc, char **argv)
+{
+	int	fd;
+	char *str;
 
-// 	int i;
+	fd = open(argv[1], O_RDONLY);
+	str = get_next_line(fd);
+	while (str)
+	{
+		printf("-%s", str);
+		str = get_next_line(fd);
+		if (!str)
+			break;
+		free(str);
+	}
 
-// 	i = 8;
-// 	fd = open(argv[1], O_RDONLY);
-
-// 	str = get_next_line(fd);
-// 	printf("El resultado es: %s", str);
-// 	free(str);
-
-// 	//hola
-// 	// printf("fd es: %d\n",fd);
-
-// 	// //system("leaks -q a.out");
-// 	// //e
-// 	// str = get_next_line(fd);
-// 	// printf("El resultado es: %s", str);
-// 	// free(str);
-// 	// //system("leaks -q a.out");
-
-// 	// //null
-// 	// str = get_next_line(fd);
-// 	// printf("El resultado es: %s", str);
-// 	// free(str);
-// 	//system("leaks -q a.out");
-
-// 	return (0);
-// }
+	return (0);
+}
