@@ -6,35 +6,11 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2023/12/19 22:35:58 by barjimen         ###   ########.fr       */
+/*   Updated: 2024/01/08 21:05:09 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t	a;
-	char	*b;
-
-	if (!s)
-		return (NULL);
-	a = ft_strlen(s);
-	if (start >= a)
-	{
-		b = ft_calloc(1, 1);
-		if (!b)
-			return (NULL);
-		return (b);
-	}
-	if (len > a)
-		len = a - start;
-	b = ft_calloc(sizeof(char), len + 1);
-	if (!b)
-		return (NULL);
-	b = ft_memcpy(b, &s[start], len);
-	return (b);
-}
 
 char	*joiny(char *montoncito, int fd)
 {
@@ -42,7 +18,7 @@ char	*joiny(char *montoncito, int fd)
 	int		aux;
 	char	*temp;
 
-	aux = 0;
+	aux = 1;
 	buffer[aux] = '\0';
 	while (!ft_strchr(buffer, '\n'))
 	{
@@ -62,27 +38,55 @@ char	*joiny(char *montoncito, int fd)
 		}
 		else
 		{
-			montoncito = ft_calloc(aux + 1, sizeof(char));
+			montoncito = ft_calloc(sizeof(char), aux + 1);
 			ft_memcpy(montoncito, buffer, aux);
-		}	
+		}
 	}
 	return (montoncito);
 }
 
-char	*cutty(char *montoncito)
+char 	*clean(char *montoncito)
+{
+	int 	count;
+	int	x;
+	char	*tmp;
+	
+	x = 0;
+	count = 0;
+	printf("\n montoncito es: %s", montoncito);
+	while(montoncito[count] != '\n' && montoncito[count] != '\0' )
+		{
+			printf("|%c|", montoncito[count]);
+			count++;
+		}
+	if (!montoncito[count])
+	{
+		free(montoncito);
+		return (NULL);
+	}
+	
+	tmp = calloc(sizeof(char), ft_strlen(montoncito) + 2 - count);
+	while (montoncito[count])
+	{
+		tmp[x++] = montoncito[count++];
+	}
+	//printf("\n tmp es: %s", tmp);
+	free(montoncito);
+	return (tmp);
+}
+
+char	*cutty(char **montoncito)
 {
 	int		cont;
 	char	*line;
 
 	cont = 0;
-	while (montoncito[cont] != '\n' && montoncito[cont] != '\0')
+	while ((*montoncito)[cont] != '\0' && (*montoncito)[cont] != '\n')
 		cont++;
-	if (montoncito[cont] == '\n')
-		cont++;
-	line = ft_calloc(sizeof(char), cont + 1);
+	line = ft_calloc(sizeof(char), cont + 2);
 	if (!line)
 		return (NULL);
-	ft_memcpy(line, montoncito, cont);
+	ft_memcpy(line, *montoncito, cont);
 	return (line);
 }
 
@@ -90,7 +94,6 @@ char	*get_next_line(int fd)
 {
 	static char	*montoncito;
 	char		*line;
-	char		*tmp;
 
 	line = NULL;
 	if (fd != -1 || BUFFER_SIZE > 0)
@@ -98,39 +101,26 @@ char	*get_next_line(int fd)
 		montoncito = joiny(montoncito, fd);
 		if (!montoncito)
 			return (NULL);
-		if (!ft_strchr(montoncito, '\n'))
-		{
-			line = montoncito;
-			montoncito = NULL;
-		}
-		else
-		{
-			line = cutty(montoncito);
-			tmp = montoncito;
-			montoncito = ft_substr(montoncito, ft_strlen(line), -1);
-			if (!montoncito)
-				montoncito = tmp;
-			else
-				free(tmp);
-		}
+		line = cutty(&montoncito);
+		printf("\n line es: %s", line);
+		//printf("\n montoncito es: %s", montoncito);
+		montoncito = clean(montoncito);
+		//printf("\n montoncito es: %s", montoncito);
 	}
 	return (line);
 }
 
-int	main(int argc, char **argv)
+int	main()
 {
 	int	fd;
 	char *str;
 
-	fd = open(argv[1], O_RDONLY);
+	fd = open("notita.txt", O_RDONLY);
 	str = get_next_line(fd);
 	while (str)
 	{
 		printf("-%s", str);
 		str = get_next_line(fd);
-		if (!str)
-			break;
-		free(str);
 	}
 
 	return (0);
