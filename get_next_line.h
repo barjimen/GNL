@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 00:13:35 by barjimen          #+#    #+#             */
-/*   Updated: 2024/01/10 20:33:22 by barjimen         ###   ########.fr       */
+/*   Updated: 2024/01/13 19:14:15 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@
 # include "string.h"
 # include "stdlib.h"
 
-//END LIB
-# if BUFFER_SIZE > 9000000
+//END LIB;
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 10
+#endif // BUFFER_SIZE
+# if BUFFER_SIZE > 8000000
 #  undef BUFFER_SIZE 
 # define BUFFER_SIZE 1
 # endif
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
+// # ifndef BUFFER_SIZE
+// #  define BUFFER_SIZE 10000000
+// # endif
 
 //FUNCTIONS
 

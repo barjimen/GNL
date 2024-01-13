@@ -6,11 +6,30 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2024/01/10 20:23:09 by barjimen         ###   ########.fr       */
+/*   Updated: 2024/01/13 19:42:14 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int readFile(int fd, char *buffer, char **montoncito)
+{
+	int aux;
+	aux = read(fd, buffer, BUFFER_SIZE);
+	if (aux < 0 || !buffer)
+	{
+		if (aux == -1 && *montoncito)
+		{
+			free(*montoncito);
+			*montoncito = NULL;
+		}
+	}
+	else
+	{
+		buffer[aux] = '\0';
+	}
+	return aux;
+}
 
 char	*joiny(char *montoncito, int fd)
 {
@@ -22,14 +41,9 @@ char	*joiny(char *montoncito, int fd)
 	// buffer[aux] = '\0';
 	while (!ft_strchr(buffer, '\n'))
 	{
-		aux = read(fd, buffer, BUFFER_SIZE);
-		if ((aux == -1 || !*buffer))
-		{
-			return (montoncito);
-		}
-		if (aux == 0)
+		aux = readFile(fd, buffer, &montoncito);
+		if (aux <= 0 || !*buffer)
 			break ;
-		buffer[aux] = '\0';
 		if (montoncito)
 		{
 			temp = montoncito;
@@ -54,7 +68,7 @@ char	*clean(char *montoncito)
 	x = 0;
 	count = 0;
 	// printf("\n montoncito es: %s", montoncito);
-	while (montoncito[count - 1] != '\n' && montoncito[count] != '\0')
+	while ((count == 0 || montoncito[count - 1] != '\n') && montoncito[count] != '\0')
 		count++;
 	// if (montoncito[count] == '\n')
 	//	count++;
@@ -108,19 +122,19 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
-{
-	int fd;
-	char *str;
+// int	main(void)
+// {
+// 	int fd;
+// 	char *str;
 
-	fd = open("notita.txt", O_RDONLY);
-	str = get_next_line(fd);
-	printf("->%s<-", str);
-	while (str)
-	{
-		str = get_next_line(fd);
-		printf("->%s<-", str);
-	}
+// 	fd = open("notita.txt", O_RDONLY);
+// 	str = get_next_line(fd);
+// 	printf("->%s<-", str);
+// 	while (str)
+// 	{
+// 		str = get_next_line(fd);
+// 		printf("->%s<-", str);
+// 	}
 
-	return (0);
-}
+// 	return (0);
+// }

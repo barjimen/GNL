@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 00:13:30 by barjimen          #+#    #+#             */
-/*   Updated: 2024/01/10 20:15:57 by barjimen         ###   ########.fr       */
+/*   Updated: 2024/01/11 19:35:10 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,21 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	char	*a;
-	size_t	b;
-	size_t	c;
+	char	*str;
+	size_t	str_size;
+	size_t	i;
 
-	b = count * size;
-	a = (char *) malloc(b);
-	if (b < size && b < count)
-	{
+	str_size = count * size;
+	str = malloc(str_size);
+	if (!str)
 		return (NULL);
-	}
-	if (a != NULL)
+	i = 0;
+	while (i < str_size)
 	{
-		c = 0;
-		while (c < b)
-		{
-			a[c] = '\0';
-			c++;
-		}
+		str[i] = '\0';
+		i++;
 	}
-	return ((void *)a);
+	return (str);
 }
 
 char	*ft_strchr(const char *str, int c)
