@@ -6,15 +6,16 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2024/01/13 19:42:14 by barjimen         ###   ########.fr       */
+/*   Updated: 2024/01/15 16:47:10 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int readFile(int fd, char *buffer, char **montoncito)
+int	readfile(int fd, char *buffer, char **montoncito)
 {
-	int aux;
+	int	aux;
+
 	aux = read(fd, buffer, BUFFER_SIZE);
 	if (aux < 0 || !buffer)
 	{
@@ -28,7 +29,7 @@ int readFile(int fd, char *buffer, char **montoncito)
 	{
 		buffer[aux] = '\0';
 	}
-	return aux;
+	return (aux);
 }
 
 char	*joiny(char *montoncito, int fd)
@@ -38,10 +39,9 @@ char	*joiny(char *montoncito, int fd)
 	char	*temp;
 
 	aux = 1;
-	// buffer[aux] = '\0';
 	while (!ft_strchr(buffer, '\n'))
 	{
-		aux = readFile(fd, buffer, &montoncito);
+		aux = readfile(fd, buffer, &montoncito);
 		if (aux <= 0 || !*buffer)
 			break ;
 		if (montoncito)
@@ -67,11 +67,9 @@ char	*clean(char *montoncito)
 
 	x = 0;
 	count = 0;
-	// printf("\n montoncito es: %s", montoncito);
-	while ((count == 0 || montoncito[count - 1] != '\n') && montoncito[count] != '\0')
+	while ((count == 0 || montoncito[count - 1] != '\n')
+		&& montoncito[count] != '\0')
 		count++;
-	// if (montoncito[count] == '\n')
-	//	count++;
 	if (!montoncito[count])
 	{
 		free(montoncito);
@@ -79,10 +77,7 @@ char	*clean(char *montoncito)
 	}
 	tmp = calloc(sizeof(char), ft_strlen(montoncito) + 2 - count);
 	while (montoncito[count])
-	{
 		tmp[x++] = montoncito[count++];
-	}
-	// printf("\n tmp es: %s", tmp);
 	free(montoncito);
 	return (tmp);
 }
@@ -114,10 +109,7 @@ char	*get_next_line(int fd)
 		if (!montoncito)
 			return (NULL);
 		line = cutty(&montoncito);
-		// printf("\n line es: %s", line);
-		// printf("\n montoncito es: %s", montoncito);
 		montoncito = clean(montoncito);
-		// printf("montoncito es: |%s|", montoncito);
 	}
 	return (line);
 }
