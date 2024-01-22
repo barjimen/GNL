@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2024/01/22 20:03:10 by barjimen         ###   ########.fr       */
+/*   Created: 2024/01/22 18:09:24 by barjimen          #+#    #+#             */
+/*   Updated: 2024/01/22 20:22:20 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,34 +99,17 @@ char	*cutty(char **montoncito)
 
 char	*get_next_line(int fd)
 {
-	static char	*montoncito;
+	static char	*montoncito[1024];
 	char		*line;
 
 	line = NULL;
 	if (fd != -1 || BUFFER_SIZE > 0 || BUFFER_SIZE < 2147483647)
 	{
-		montoncito = joiny(montoncito, fd);
-		if (!montoncito)
+		montoncito[fd] = joiny(montoncito[fd], fd);
+		if (!montoncito[fd])
 			return (NULL);
-		line = cutty(&montoncito);
-		montoncito = clean(montoncito);
+		line = cutty(&montoncito[fd]);
+		montoncito[fd] = clean(montoncito[fd]);
 	}
 	return (line);
 }
-
-// int	main(void)
-// {
-// 	int fd;
-// 	char *str;
-
-// 	fd = open("notita.txt", O_RDONLY);
-// 	str = get_next_line(fd);
-// 	printf("->%s<-", str);
-// 	while (str)
-// 	{
-// 		str = get_next_line(fd);
-// 		printf("->%s<-", str);
-// 	}
-
-// 	return (0);
-// }
