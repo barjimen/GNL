@@ -6,11 +6,11 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 18:09:33 by barjimen          #+#    #+#             */
-/*   Updated: 2024/01/22 20:03:38 by barjimen         ###   ########.fr       */
+/*   Updated: 2024/01/23 21:07:21 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {

@@ -6,29 +6,23 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 00:13:35 by barjimen          #+#    #+#             */
-/*   Updated: 2024/01/15 16:48:01 by barjimen         ###   ########.fr       */
+/*   Updated: 2024/01/23 21:14:51 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include "stdio.h"
-# include "unistd.h"
 # include "fcntl.h"
-# include "string.h"
+# include "stdio.h"
 # include "stdlib.h"
+# include "string.h"
+# include "unistd.h"
 
-//END LIB;
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
-#endif // BUFFER_SIZE
-# if BUFFER_SIZE > 8000000
-#  undef BUFFER_SIZE 
-# define BUFFER_SIZE 1
+// END LIB;
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
 # endif
-
-//FUNCTIONS
 
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t count, size_t size);
