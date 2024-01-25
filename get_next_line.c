@@ -6,7 +6,7 @@
 /*   By: barjimen <barjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 22:16:30 by barjimen          #+#    #+#             */
-/*   Updated: 2024/01/25 19:11:45 by barjimen         ###   ########.fr       */
+/*   Updated: 2024/01/25 19:13:32 by barjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,20 +113,3 @@ char	*get_next_line(int fd)
 	}
 	return (line);
 }
-
-// int	main(void)
-// {
-// 	int fd;
-// 	char *str;
-
-// 	fd = open("notita.txt", O_RDONLY);
-// 	str = get_next_line(fd);
-// 	printf("->%s<-", str);
-// 	while (str)
-// 	{
-// 		str = get_next_line(fd);
-// 		printf("->%s<-", str);
-// 	}
-
-// 	return (0);
-// }
